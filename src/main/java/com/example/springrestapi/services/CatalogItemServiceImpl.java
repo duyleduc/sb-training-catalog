@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.springrestapi.entities.Catalog;
+import com.example.springrestapi.entities.CatalogItem;
 import com.example.springrestapi.mappers.CatalogItemMapper;
 import com.example.springrestapi.models.CatalogItemDto;
 import com.example.springrestapi.repositories.CatalogItemRepository;
@@ -44,6 +45,12 @@ public class CatalogItemServiceImpl implements CatalogItemService {
 
         catalogItemRepository.save(catalogItemMapper.toCatalogItem(dto, catalog.get()));
         return dto;
+    }
+
+    @Override
+    public CatalogItem getCatalogItemById(String id) throws Exception {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

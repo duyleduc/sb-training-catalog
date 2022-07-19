@@ -1,6 +1,8 @@
 package com.example.springrestapi.services.interfaces;
 
 import java.util.List;
+
+import com.example.springrestapi.entities.Catalog;
 import com.example.springrestapi.models.CatalogDto;
 import com.example.springrestapi.models.CatalogItemDto;
 
@@ -10,4 +12,6 @@ public interface CatalogService {
     List<CatalogItemDto> getCatalogItems(String catalogId) throws Exception;
 
     List<CatalogDto> getCatalogs() throws Exception;
+
+    Catalog getCatalogById(String id) throws Exception;
 }

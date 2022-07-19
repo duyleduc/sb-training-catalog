@@ -12,19 +12,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.springrestapi.configurations.RequestConfig;
 import com.example.springrestapi.models.UserDto;
-import com.example.springrestapi.services.interfaces.UserService;
+import com.example.springrestapi.requestBodies.Auth.AuthRequest;
+import com.example.springrestapi.services.interfaces.AuthService;
 
 @RestController
-@RequestMapping(RequestConfig.BASE_PUBLIC_URL + "/users")
-public class UserPublicController {
+@RequestMapping(RequestConfig.BASE_PUBLIC_URL + "/auth")
+public class AuthController {
 
     @Autowired
-    private UserService userService;
+    AuthService authService;
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<String> generateOTP(@Valid @RequestBody AuthRequest body) throws Exception {
+        String result = authService.login(body);
+
+        return new ResponseEntity<String>(result, HttpStatus.OK);
+    }
 
     @PostMapping("/register")
     public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserDto body) throws Exception {
-        UserDto res = userService.registerUser(body);
+        UserDto res = authService.registerUser(body);
         return new ResponseEntity<UserDto>(res, HttpStatus.OK);
     }
-
 }

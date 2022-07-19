@@ -18,7 +18,7 @@ import com.example.springrestapi.services.interfaces.UserService;
 
 @RestController
 @RequestMapping(RequestConfig.BASE_PROTECTED_URL + "/users")
-public class UserProtectedController {
+public class UserController {
 
     @Autowired
     private UserService userService;

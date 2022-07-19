@@ -26,20 +26,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDto registerUser(UserDto user) throws Exception {
-
-        User existedUser = userRepository.findByEmail(user.getEmail());
-        if (existedUser != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "User with email: " + user.getEmail() + " already existed");
-        }
-
-        userRepository.save(userMapper.toUser(user));
-        return user;
-    }
-
-    @Override
-    @Transactional
     public UserDto editUser(UserDto user, UUID id) throws Exception {
         Optional<User> existedUser = userRepository.findById(id);
         if (existedUser.isEmpty()) {
@@ -52,6 +38,33 @@ public class UserServiceImpl implements UserService {
         existedUser.get().setPhone(user.getPhone());
         userRepository.save(existedUser.get());
         return user;
+    }
+
+    @Override
+    public User getUserByEmail(String email) throws Exception {
+        User existedUser = userRepository.findByEmail(email);
+        if (existedUser == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "User with " + email + "  doest not exist");
+        }
+        return existedUser;
+    }
+
+    @Override
+    public User getUserByPhoneNumber(String phone) throws Exception {
+        User existedUser = userRepository.findByPhone(phone);
+        if (existedUser == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "User with phone number " + phone + "  doest not exist");
+        }
+        return existedUser;
+    }
+
+    @Override
+    public User addNewUser(UserDto user) throws Exception {
+        User newUser = userMapper.toUser(user);
+        userRepository.save(newUser);
+        return newUser;
     }
 
 }

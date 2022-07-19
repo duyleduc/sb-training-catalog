@@ -33,24 +33,16 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     @Transactional
     public CatalogDto createCatalog(CatalogDto dto) throws Exception {
-
-        if (!catalogRepository.existsById(dto.getCatalogId())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Catalog with id: " + dto.getCatalogId() + "  already existed");
-        }
+        getCatalogById(dto.getCatalogId());
         catalogRepository.save(catalogMapper.toCatalog(dto));
         return dto;
     }
 
     @Override
     public List<CatalogItemDto> getCatalogItems(String catalogId) throws Exception {
-        Optional<Catalog> catalog = catalogRepository.findById(catalogId);
-        if (catalog.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Catalog with id: " + catalogId + "  does not exist");
-        }
 
-        return catalog.get().getCatalogItems().stream().map(x -> catalogItemMapper.toCatalogItemDto(x))
+        Catalog catalog = getCatalogById(catalogId);
+        return catalog.getCatalogItems().stream().map(x -> catalogItemMapper.toCatalogItemDto(x))
                 .collect(Collectors.toList());
     }
 
@@ -58,6 +50,16 @@ public class CatalogServiceImpl implements CatalogService {
     public List<CatalogDto> getCatalogs() throws Exception {
         return catalogRepository.findAll().stream().map(x -> catalogMapper.toCatalogDto(x))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Catalog getCatalogById(String id) throws Exception {
+        Optional<Catalog> catalog = catalogRepository.findById(id);
+        if (catalog.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Catalog with id: " + id + "  does not exist");
+        }
+        return catalog.get();
     }
 
 }
