@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -19,8 +20,12 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 public class Catalog {
+
     @Id
-    @Column(length = 8)
+    @GeneratedValue
+    Long id;
+
+    @Column(length = 8, unique = true)
     private String catalogId;
 
     @Column(length = 64)
@@ -31,17 +36,20 @@ public class Catalog {
 
     @OneToMany(targetEntity = CatalogItem.class, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
             CascadeType.REFRESH })
-    @JoinColumn(name = "catalog_id", referencedColumnName = "catalogId")
+    @JoinColumn(name = "catalog_id", referencedColumnName = "id")
     List<CatalogItem> catalogItems;
 
     @CreatedDate
     private Instant createdDate;
+
+    private Instant modifyDate;
 
     public Catalog(String catalogId, String catalogName, String description) {
         this.catalogId = catalogId;
         this.catalogName = catalogName;
         this.description = description;
         this.createdDate = Instant.now();
+        this.modifyDate = Instant.now();
     }
 
 }

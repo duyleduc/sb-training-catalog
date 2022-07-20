@@ -2,9 +2,13 @@ package com.example.springrestapi.services.interfaces;
 
 import com.example.springrestapi.entities.CatalogItem;
 import com.example.springrestapi.models.CatalogItemDto;
+import com.example.springrestapi.models.EditCatalogItemDto;
+import com.example.springrestapi.responseBodies.CatalogItemResponse;
 
 public interface CatalogItemService {
-    CatalogItemDto createCatalogItem(CatalogItemDto dto, String catalogId) throws Exception;
+    CatalogItemResponse createCatalogItem(CatalogItemDto dto, Long catalogId) throws Exception;
 
-    CatalogItem getCatalogItemById(String id) throws Exception;
+    CatalogItem getCatalogItemById(Long id) throws Exception;
+
+    CatalogItemResponse editCatalogItem(EditCatalogItemDto dto, Long id, Long catalogId) throws Exception;
 }

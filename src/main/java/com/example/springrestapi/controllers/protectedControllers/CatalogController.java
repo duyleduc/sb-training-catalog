@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.springrestapi.configurations.RequestConfig;
 import com.example.springrestapi.models.CatalogDto;
 import com.example.springrestapi.models.CatalogItemDto;
+import com.example.springrestapi.responseBodies.CatalogItemResponse;
+import com.example.springrestapi.responseBodies.CatalogResponse;
 import com.example.springrestapi.services.interfaces.CatalogService;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping(RequestConfig.BASE_PROTECTED_URL + "/catalogs")
@@ -26,21 +29,29 @@ public class CatalogController {
     private CatalogService catalogService;
 
     @GetMapping
-    public ResponseEntity<List<CatalogDto>> getCatalogs() throws Exception {
-        List<CatalogDto> response = catalogService.getCatalogs();
-        return new ResponseEntity<List<CatalogDto>>(response, HttpStatus.OK);
+    public ResponseEntity<List<CatalogResponse>> getCatalogs() throws Exception {
+        List<CatalogResponse> response = catalogService.getCatalogs();
+        return new ResponseEntity<List<CatalogResponse>>(response, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<CatalogDto> createNewCatalog(@Valid @RequestBody CatalogDto body) throws Exception {
-        CatalogDto response = catalogService.createCatalog(body);
-        return new ResponseEntity<CatalogDto>(response, HttpStatus.OK);
+    public ResponseEntity<CatalogResponse> createNewCatalog(@Valid @RequestBody CatalogDto body) throws Exception {
+        CatalogResponse response = catalogService.createCatalog(body);
+        return new ResponseEntity<CatalogResponse>(response, HttpStatus.OK);
     }
 
     @GetMapping(value = "{id}/items")
-    public ResponseEntity<List<CatalogItemDto>> getItems(@PathVariable(value = "id") String id) throws Exception {
-        List<CatalogItemDto> response = catalogService.getCatalogItems(id);
-        return new ResponseEntity<List<CatalogItemDto>>(response, HttpStatus.OK);
+    public ResponseEntity<List<CatalogItemResponse>> getItems(@PathVariable(value = "id") Long id) throws Exception {
+        List<CatalogItemResponse> response = catalogService.getCatalogItems(id);
+        return new ResponseEntity<List<CatalogItemResponse>>(response, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<CatalogResponse> editCatalog(@PathVariable Long id, @RequestBody CatalogDto dto)
+            throws Exception {
+        CatalogResponse response = catalogService.editCatalog(dto, id);
+        return new ResponseEntity<CatalogResponse>(response, HttpStatus.OK);
+
     }
 
 }

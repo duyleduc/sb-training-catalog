@@ -14,7 +14,7 @@ public class RequestConfig implements WebMvcConfigurer {
 
     public final static String BASE_PROTECTED_URL = "/api/v1/protected";
 
-    public final static String BASE_PUBLIC_URL = "/api/v1/publish";
+    public final static String BASE_PUBLIC_URL = "/api/v1/public";
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {

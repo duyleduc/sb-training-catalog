@@ -4,14 +4,19 @@ import java.util.List;
 
 import com.example.springrestapi.entities.Catalog;
 import com.example.springrestapi.models.CatalogDto;
-import com.example.springrestapi.models.CatalogItemDto;
+import com.example.springrestapi.responseBodies.CatalogItemResponse;
+import com.example.springrestapi.responseBodies.CatalogResponse;
 
 public interface CatalogService {
-    CatalogDto createCatalog(CatalogDto dto) throws Exception;
+    CatalogResponse createCatalog(CatalogDto dto) throws Exception;
 
-    List<CatalogItemDto> getCatalogItems(String catalogId) throws Exception;
+    List<CatalogItemResponse> getCatalogItems(Long id) throws Exception;
 
-    List<CatalogDto> getCatalogs() throws Exception;
+    public List<CatalogResponse> getCatalogs() throws Exception;
 
-    Catalog getCatalogById(String id) throws Exception;
+    Catalog getCatalogById(Long id) throws Exception;
+
+    CatalogResponse editCatalog(CatalogDto dto, Long id) throws Exception;
+
+    Catalog getCatalogByCatalogId(String catalogId) throws Exception;
 }

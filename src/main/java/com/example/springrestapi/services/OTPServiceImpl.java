@@ -89,7 +89,7 @@ public class OTPServiceImpl implements OTPService {
     }
 
     @Override
-    public String verifyOTPFromEmail(@Email String email, String code) throws Exception {
+    public String verifyOTPFromEmail(String email, String code) throws Exception {
         UserOTP userOTP = userOTPRepository.findByUserEmail(email);
         String result = verify(userOTP, code);
         return result;

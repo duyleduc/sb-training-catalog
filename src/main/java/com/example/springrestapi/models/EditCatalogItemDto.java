@@ -7,10 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CatalogItemDto {
+public class EditCatalogItemDto {
     @NotBlank
     @Size(max = 8)
     private String itemId;
@@ -21,4 +22,8 @@ public class CatalogItemDto {
 
     @Size(max = 64)
     private String description;
+
+    @Size(max = 8)
+
+    private String catalogId;
 }
