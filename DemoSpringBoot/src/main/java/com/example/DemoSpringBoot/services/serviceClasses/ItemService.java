@@ -1,4 +1,4 @@
-package com.example.DemoSpringBoot.services;
+package com.example.DemoSpringBoot.services.serviceClasses;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ import com.example.DemoSpringBoot.mappers.ItemMapper;
 import com.example.DemoSpringBoot.models.DTO.ItemDTO;
 import com.example.DemoSpringBoot.repositories.CatalogRepository;
 import com.example.DemoSpringBoot.repositories.ItemRepository;
+import com.example.DemoSpringBoot.services.ItemServiceImpl;
 
 @Service
 public class ItemService implements ItemServiceImpl {

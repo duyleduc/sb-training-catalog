@@ -1,4 +1,4 @@
-package com.example.DemoSpringBoot.services;
+package com.example.DemoSpringBoot.services.serviceClasses;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +10,7 @@ import com.example.DemoSpringBoot.entities.Catalogs;
 import com.example.DemoSpringBoot.mappers.CatalogMapper;
 import com.example.DemoSpringBoot.models.DTO.CatalogDTO;
 import com.example.DemoSpringBoot.repositories.CatalogRepository;
+import com.example.DemoSpringBoot.services.CatalogServiceImpl;
 
 @Service
 public class CatalogService implements CatalogServiceImpl {

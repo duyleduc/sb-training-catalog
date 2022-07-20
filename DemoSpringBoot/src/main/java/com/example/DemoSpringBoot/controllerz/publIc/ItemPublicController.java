@@ -12,7 +12,7 @@ import com.example.DemoSpringBoot.models.DTO.ItemDTO;
 import com.example.DemoSpringBoot.services.ItemServiceImpl;
 
 @RestController
-@RequestMapping("api/v1/public/catalogs/${CatalogID}/items")
+@RequestMapping("api/v1/public/catalogs/{CatalogID}/items")
 public class ItemPublicController {
     @Autowired
     private ItemServiceImpl iService;

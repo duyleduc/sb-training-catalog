@@ -6,16 +6,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.DemoSpringBoot.models.DTO.UserDTO;
 import com.example.DemoSpringBoot.services.UserServiceImpl;
+import com.example.DemoSpringBoot.templates.OTPRequestBodyTemplate;
 
 @RestController
-@RequestMapping("api/v1/public/userss")
+@RequestMapping("api/v1/public/users")
 public class UserPublicController {
-    @Autowired
+  @Autowired
     private UserServiceImpl uService;
 
     @GetMapping(value = "")
@@ -26,5 +29,10 @@ public class UserPublicController {
     @GetMapping(value = "/{id}")
     public UserDTO getOneByID(@PathVariable BigInteger id) throws Exception {
         return uService.getOneUser(id);
+    }
+
+    @PostMapping(value = "/OTP")
+    public void sendOTPUser(@RequestBody OTPRequestBodyTemplate OTP) throws Exception {
+        uService.sendOTPUser(OTP.getReceiver(),OTP.getFullname(), OTP.getSubject(), OTP.getMessage());
     }
 }
