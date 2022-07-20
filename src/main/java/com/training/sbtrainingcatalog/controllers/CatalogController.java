@@ -35,25 +35,24 @@ public class CatalogController {
         return catalogs.stream().map(catalog -> modelMapper.map(catalog,CatalogDto.class)).collect(Collectors.toList());
     }
 
-    @GetMapping("{catalogID}")
-    public CatalogDto getCatalog(@PathVariable String catalogID){
-        Catalog catalog = catalogService.getCatalog(catalogID);
+    @GetMapping("{id}")
+    public CatalogDto getCatalog(@PathVariable Long id){
+        Catalog catalog = catalogService.getCatalog(id);
 
         return  modelMapper.map(catalog,CatalogDto.class);
     }
 
-    @PutMapping("{catalogID}")
-    public CatalogDto updateCatalog(@PathVariable String catalogID, @RequestBody CatalogDto catalogDto){
+    @PutMapping("{id}")
+    public CatalogDto updateCatalog(@PathVariable long id, @RequestBody @Valid CatalogDto catalogDto){
         Catalog catalog = modelMapper.map(catalogDto,Catalog.class);
-        catalog.setCatalogID(catalogID);
-        Catalog catalogRes = catalogService.updateCatalog(catalog);
+        Catalog catalogRes = catalogService.updateCatalog(catalog,id);
         CatalogDto catalogDtoRes = modelMapper.map(catalogRes,CatalogDto.class);
         return catalogDtoRes;
     }
 
-    @DeleteMapping("{catalogID}")
-    public String removeCatalog(@PathVariable String catalogID){
+    @DeleteMapping("{id}")
+    public Long removeCatalog(@PathVariable Long id){
 
-        return catalogService.removeCatalog(catalogID);
+        return catalogService.removeCatalog(id);
     }
 }

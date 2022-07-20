@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,17 +32,17 @@ public class ProductController {
         return products.stream().map(product -> modelMapper.map(product,ProductDto.class)).collect(Collectors.toList());
     }
 
-    @GetMapping("{itemID}")
-    public ProductDto getProduct(@PathVariable String itemID){
-        Product product = productService.getProduct(itemID);
+    @GetMapping("{id}")
+    public ProductDto getProduct(@PathVariable Long id){
+        Product product = productService.getProduct(id);
         return modelMapper.map(product,ProductDto.class);
     }
 
     @PostMapping
-    public ProductDto saveProduct(@RequestBody ProductDto productDto){
-        List<String> catalogID = catalogService.getCatalogIDs();
+    public ProductDto saveProduct(@RequestBody @Valid ProductDto productDto){
+        List<Long> catalogIds = catalogService.getCatalogIds();
 
-        if(!catalogID.contains(productDto.getCatalogID())){
+        if(!catalogIds.contains(productDto.getCatalogId())){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "entity not found"
             );
@@ -50,7 +51,7 @@ public class ProductController {
         Product product = modelMapper.map(productDto,Product.class);
 
 
-        Catalog catalog = catalogService.getCatalog(productDto.getCatalogID());
+        Catalog catalog = catalogService.getCatalog(productDto.getCatalogId());
         product.setCatalog(catalog);
 
         Product productRes = productService.saveProduct(product);
@@ -59,27 +60,26 @@ public class ProductController {
         return productDtoRes;
     }
 
-    @PutMapping("{itemID}")
-    public ProductDto updateProduct(@RequestBody ProductDto productDto,@PathVariable String itemID){
-        List<String> catalogID = catalogService.getCatalogIDs();
+    @PutMapping("{id}")
+    public ProductDto updateProduct(@RequestBody @Valid ProductDto productDto, @PathVariable Long id){
+        List<Long> catalogIds = catalogService.getCatalogIds();
 
-        if(!catalogID.contains(productDto.getCatalogID())){
+        if(!catalogIds.contains(productDto.getCatalogId())){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "entity not found"
             );
         }
 
         Product product = modelMapper.map(productDto,Product.class);
-        product.setItemID(itemID);
 
-        Product productRes = productService.updateProduct(product);
+        Product productRes = productService.updateProduct(product,id);
         ProductDto productDtoRes = modelMapper.map(productRes,ProductDto.class);
 
         return productDtoRes;
     }
 
-    @DeleteMapping("{itemID}")
-    public String removeProduct(@PathVariable String itemID){
-        return productService.removeProduct(itemID);
+    @DeleteMapping("{id}")
+    public Long removeProduct(@PathVariable Long id){
+        return productService.removeProduct(id);
     }
 }

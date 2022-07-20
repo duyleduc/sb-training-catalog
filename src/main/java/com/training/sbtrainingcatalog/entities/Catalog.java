@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity @Getter @Setter
@@ -13,6 +14,9 @@ import java.util.List;
 @Table(name="catalog")
 public class Catalog {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name="catalog_id")
     private String catalogID;
 
@@ -26,7 +30,10 @@ public class Catalog {
     @Column(name = "created_date")
     private LocalDateTime createdDate;
 
-    @OneToMany( cascade = CascadeType.ALL,mappedBy = "catalog", orphanRemoval = true,fetch = FetchType.EAGER)
+    @Column(name = "modify_date")
+    private LocalDateTime modifyDate;
+
+    @OneToMany( cascade = CascadeType.ALL,mappedBy = "catalog", fetch = FetchType.EAGER)
 //    @JoinColumn(name="catalog_id")
     private List<Product> products;
 
@@ -35,6 +42,18 @@ public class Catalog {
             products = new ArrayList<>();
         }
         products.add(product);
+    }
+
+    public List<Product> getProducts() {
+        return this.products == null ? null : new ArrayList<>(this.products);
+    }
+
+    public void setProducts(List<Product> products) {
+        if (products == null) {
+            this.products = null;
+        } else {
+            this.products = Collections.unmodifiableList(products);
+        }
     }
 
     @PrePersist

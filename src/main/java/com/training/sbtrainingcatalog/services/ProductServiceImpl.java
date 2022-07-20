@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -28,8 +29,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product getProduct(String itemID) {
-        return productRepository.findByItemID(itemID);
+    public Product getProduct(Long id) {
+        return productRepository.findProductById(id);
     }
 
     @Override
@@ -42,26 +43,36 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product updateProduct(Product product) {
-        Product productDB = productRepository.findByItemID(product.getItemID());
+    public Product updateProduct(Product product,Long id) {
+        Product productDB = productRepository.findProductById(id);
         if(productDB==null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "entity not found"
             );
         }
-        product.setCreatedDate(productDB.getCreatedDate());
-        return productRepository.save(product);
+
+        Product productByNewExistInDB = productRepository.findByItemID(product.getItemID());
+        if(productByNewExistInDB != null && productByNewExistInDB.getId()!=productDB.getId()){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Product already existed"
+            );
+        }
+
+        productDB.setItemID(product.getItemID());
+        productDB.setItemName(product.getItemName());
+        productDB.setModifyDate(LocalDateTime.now());
+        return productRepository.save(productDB);
     }
 
     @Override
-    public String removeProduct(String itemID) {
-        Product product = productRepository.findByItemID(itemID);
+    public Long removeProduct(Long id) {
+        Product product = productRepository.findProductById(id);
         if(product==null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "entity not found"
             );
         }
         productRepository.delete(product);
-        return itemID;
+        return id;
     }
 }

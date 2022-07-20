@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
 @Table(name = "product")
 public class Product {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name="item_id")
     private String itemID;
 
@@ -32,6 +35,9 @@ public class Product {
 
     @Column(name="created_date")
     private LocalDateTime createdDate;
+
+    @Column(name="modify_date")
+    private LocalDateTime modifyDate;
 
     @PrePersist
     protected void onCreate() {

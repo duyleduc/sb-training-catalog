@@ -18,6 +18,8 @@ import java.util.List;
 @Data
 public class CatalogDto {
 
+    private long id;
+
     @NotEmpty(message = "ID shouldn't be empty")
     @Size( max = 8, message = "ID is no more than 8 characters")
     private String catalogID;
@@ -32,4 +34,6 @@ public class CatalogDto {
     private LocalDateTime createdDate;
 
     private List<ProductDto> products;
+
+    private LocalDateTime modifyDate ;
 }

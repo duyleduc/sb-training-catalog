@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -26,12 +28,12 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    public List<String> getCatalogIDs() {
-        return catalogRepository.findAllCatalogID();
+    public List<Long> getCatalogIds() {
+        return catalogRepository.findAllCatalogId();
     }
     @Override
-    public Catalog getCatalog(String catalogID) {
-        return catalogRepository.findByCatalogID(catalogID);
+    public Catalog getCatalog(Long id) {
+        return catalogRepository.findCatalogById(id);
     }
 
     @Override
@@ -46,29 +48,38 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    public Catalog updateCatalog(Catalog catalog) {
-        Catalog catalogDB = catalogRepository.findByCatalogID(catalog.getCatalogID());
+    public Catalog updateCatalog(Catalog catalog,Long id) {
+        Catalog catalogDB = catalogRepository.findCatalogById(id);
         if(catalogDB==null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "entity not found"
             );
         }
+        Catalog catalogByNewExistInDB = catalogRepository.findByCatalogID(catalog.getCatalogID());
+        if(catalogByNewExistInDB!=null && catalogByNewExistInDB.getId() != catalogDB.getId()){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Catalog already existed"
+            );
+        }
 
-        catalog.setCreatedDate(catalogDB.getCreatedDate());
-        catalogRepository.save(catalog);
+        catalogDB.setCatalogID(catalog.getCatalogID());
+        catalogDB.setCatalogName(catalog.getCatalogName());
+        catalogDB.setModifyDate(LocalDateTime.now());
 
-        return catalogRepository.findByCatalogID(catalog.getCatalogID());
+        Catalog catalogUpdate = catalogRepository.save(catalogDB);
+
+        return catalogUpdate;
     }
 
     @Override
-    public String removeCatalog(String catalogID) {
-        Catalog catalog = catalogRepository.findByCatalogID(catalogID);
+    public Long removeCatalog(Long id) {
+        Catalog catalog = catalogRepository.findCatalogById(id);
         if(catalog==null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "entity not found"
             );
         }
         catalogRepository.delete(catalog);
-        return catalogID;
+        return id;
     }
 }

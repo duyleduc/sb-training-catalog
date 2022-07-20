@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 public class ProductDto {
+
+    private Long id;
+
     @NotEmpty(message = "ID shouldn't be empty")
     @Size( max = 8, message = "ID is no more than 8 characters")
     private String itemID;
@@ -23,7 +26,8 @@ public class ProductDto {
     @Size( max = 64, message = "description shouldn't more than 64 characters")
     private String description;
 
-    private String catalogID;
+    private Long catalogId;
 
     private LocalDateTime createdDate;
+    private LocalDateTime modifyDate;
 }
