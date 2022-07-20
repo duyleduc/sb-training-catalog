@@ -1,5 +1,7 @@
 package com.example.DemoSpringBoot.services.serviceClasses;
 
+import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +24,7 @@ public class CatalogService implements CatalogServiceImpl {
     CatalogRepository repository;
 
     @Override
-    public CatalogDTO getCatalog(String id) throws Exception {
+    public CatalogDTO getCatalog(BigInteger id) throws Exception {
         try {
             Optional<Catalogs> catalog = repository.findById(id);
             return mapper.catalog2DTO(catalog.get());
@@ -43,8 +45,8 @@ public class CatalogService implements CatalogServiceImpl {
 
     @Override
     public CatalogDTO createCatalog(CatalogDTO catalogDTO) throws Exception {
-        if(repository.existsById(catalogDTO.getCatalogID())){
-            throw new Exception("User already exist. If you wanna edit plz use PUT METHOD.");
+        if (repository.IsCataLog(catalogDTO.getCatalogID())) {
+            throw new Exception("Catalog already exist. If you wanna edit plz use PUT METHOD.");
         }
         try {
             Catalogs catalog = repository.save(mapper.DTO2Catalog(catalogDTO));
@@ -55,13 +57,25 @@ public class CatalogService implements CatalogServiceImpl {
     }
 
     @Override
-    public CatalogDTO editCatalog(String id, CatalogDTO editInfo) throws Exception {
+    public CatalogDTO editCatalog(BigInteger id, CatalogDTO editInfo) throws Exception {
+        // resend edit data to the same row.
+        if (repository.IsCataLog(editInfo.getCatalogID())) {
+            BigInteger DatabaseID = repository.findByCatalogID(editInfo.getCatalogID()).get().getID();
+            if (DatabaseID.intValue() == id.intValue()) {
+                throw new Exception("Already edit the Catalog with id: "+ id+".");
+            }
+            else {
+                throw new Exception("This CatalogID is already exist. Plz choose different Name");
+            }
+
+        }
         try {
             Catalogs catalog = repository.findById(id).get();
-            
-                catalog.setCatalogID(editInfo.getCatalogID());
-                catalog.setCatalogName(editInfo.getCatalogName());
-                catalog.setDescription(editInfo.getDescription());
+
+            catalog.setCatalogID(editInfo.getCatalogID());
+            catalog.setCatalogName(editInfo.getCatalogName());
+            catalog.setDescription(editInfo.getDescription());
+            catalog.setUpdateDate(new Date());
 
             repository.save(catalog);
 
@@ -72,7 +86,7 @@ public class CatalogService implements CatalogServiceImpl {
     }
 
     @Override
-    public CatalogDTO deleteCatalogDTO(String id) throws Exception {
+    public CatalogDTO deleteCatalogDTO(BigInteger id) throws Exception {
         return null;
     }
 

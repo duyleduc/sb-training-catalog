@@ -58,8 +58,8 @@ public class UserDTO {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = (createdDate != null) ? new Date(createdDate.getTime()) : new Date();
-    }
+    // public void setCreatedDate(Date createdDate) {
+    //     this.createdDate = (createdDate != null) ? new Date(createdDate.getTime()) : new Date();
+    // }
 
 }

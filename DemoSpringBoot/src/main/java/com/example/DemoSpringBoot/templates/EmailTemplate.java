@@ -1,14 +1,12 @@
 package com.example.DemoSpringBoot.templates;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.Map;
 
 public class EmailTemplate {
     private String template;
-    private Map<String, String> replacementParams;
+    // private Map<String, String> replacementParams;
 
     private InputStream stream;
 

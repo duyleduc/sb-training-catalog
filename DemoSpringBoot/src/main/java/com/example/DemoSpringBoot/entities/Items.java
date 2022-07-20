@@ -36,7 +36,7 @@ public class Items {
 
     @Column
     @CreationTimestamp
-    @ColumnDefault(value = "CURRENT_TIMESTAMP")
+    @ColumnDefault(value = "current_timestamp")
     private Date createdDate;
 
     public String getItemID() {

@@ -1,5 +1,7 @@
 package com.example.DemoSpringBoot.controllerz.privAte;
 
+import java.math.BigInteger;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +24,13 @@ public class CatalogController {
     @Autowired
     private CatalogServiceImpl cService;
 
-    // @GetMapping(value = "")
-    // public List<CatalogDTO> getAllUsers() throws Exception {
-    //     return cService.getAllCatalogs();
-    // }
-
-    // @GetMapping(value = "/{id}")
-    // public CatalogDTO getOneByID(@PathVariable String id) throws Exception {
-    //     return cService.getCatalog(id);
-    // }
-
     @PostMapping(value = "")
     public CatalogDTO postUser(@Valid @RequestBody CatalogDTO catalogDTO) throws Exception {
         return cService.createCatalog(catalogDTO);
     }
 
     @PutMapping(value = "/{id}")
-    public CatalogDTO editUser(@Valid @RequestBody CatalogDTO catalogDTO, @PathVariable String id) throws Exception {
+    public CatalogDTO editUser(@Valid @RequestBody CatalogDTO catalogDTO, @PathVariable BigInteger id) throws Exception {
         return cService.editCatalog(id, catalogDTO);
     }
 

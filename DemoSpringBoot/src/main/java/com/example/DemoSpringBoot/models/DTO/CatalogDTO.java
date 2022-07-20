@@ -1,11 +1,23 @@
 package com.example.DemoSpringBoot.models.DTO;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 public class CatalogDTO {
+    private BigInteger id;
+    
+
     private String catalogID, catalogName, description;
-    private Date createdDate;
+    private Date createdDate, updateDate;
    
+    
+
+    public BigInteger getId() {
+        return id;
+    }
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
     
     public String getCatalogID() {
         return catalogID;
@@ -28,6 +40,9 @@ public class CatalogDTO {
     public Date getCreatedDate() {
         return createdDate;
     }
+    public Date getUpdateDate() {
+        return updateDate;
+    }
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
@@ -35,4 +50,8 @@ public class CatalogDTO {
     public CatalogDTO(){
         
     }
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
 }

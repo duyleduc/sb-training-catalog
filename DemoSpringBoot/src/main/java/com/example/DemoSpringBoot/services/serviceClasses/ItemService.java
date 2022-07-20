@@ -37,32 +37,34 @@ public class ItemService implements ItemServiceImpl {
 
     @Override
     public List<ItemDTO> getAllItems(String CatalogId) throws Exception {
-        try {
-            Catalogs catalog = cRepository.findById(CatalogId).get();
-            return mapper.items2DTOs(catalog.getItems());
-        } catch (Exception exception) {
-            throw exception;
-        }
-
+        // try {
+        //     Catalogs catalog = cRepository.findById(CatalogId).get();
+        //     return mapper.items2DTOs(catalog.getItems());
+        // } catch (Exception exception) {
+        //     throw exception;
+        // }
+            return null;
     }
 
     @Override
     public ItemDTO createItem(String CatalogID, ItemDTO itemDTO) throws Exception {
-        try {
-            Catalogs catalog = cRepository.findById(CatalogID).get();
-            Items sampleItem = new Items(
-                itemDTO.getItemID(),
-                itemDTO.getItemName(),
-                itemDTO.getDescription(),
-                catalog,
-                itemDTO.getCreatedDate()
-            );
-           iRepository.save(sampleItem);
+        // try {
+        //     Catalogs catalog = cRepository.findById(CatalogID).get();
+        //     Items sampleItem = new Items(
+        //         itemDTO.getItemID(),
+        //         itemDTO.getItemName(),
+        //         itemDTO.getDescription(),
+        //         catalog,
+        //         itemDTO.getCreatedDate()
+        //     );
+        //    iRepository.save(sampleItem);
 
-            return mapper.item2DTO(sampleItem);
-        } catch (Exception e) {
-            throw e;
-        }
+        //     return mapper.item2DTO(sampleItem);
+        // } catch (Exception e) {
+        //     throw e;
+        // }
+        return null;
+
     }
 
 }

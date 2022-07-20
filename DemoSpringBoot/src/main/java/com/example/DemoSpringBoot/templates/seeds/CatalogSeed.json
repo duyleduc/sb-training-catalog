@@ -1,0 +1,27 @@
+[
+    {
+        "catalogID":"SC-001",
+        "catalogName": "CatalogName-001",
+        "description": "SampleDescription-001"
+    },
+    {
+        "catalogID":"SC-002",
+        "catalogName": "CatalogName-002",
+        "description": "SampleDescription-002"
+    },
+    {
+        "catalogID":"SC-003",
+        "catalogName": "CatalogName-003",
+        "description": "SampleDescription-003"
+    },
+    {
+        "catalogID":"SC-004",
+        "catalogName": "CatalogName-004",
+        "description": "SampleDescription-004"
+    },
+    {
+        "catalogID":"SC-005",
+        "catalogName": "CatalogName-005",
+        "description": "SampleDescription-005"
+    }
+]

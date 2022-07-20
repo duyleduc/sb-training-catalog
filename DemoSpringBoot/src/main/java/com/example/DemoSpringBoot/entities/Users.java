@@ -22,7 +22,7 @@ import com.example.DemoSpringBoot.validationz.PhoneNumberConstraint;
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "bigserial PRIMARY KEY NOT NULL")
+    @Column(columnDefinition = "bigserial primary key not null")
     private BigInteger id;
 
     @Column
@@ -47,7 +47,7 @@ public class Users {
 
     @Column
     @CreationTimestamp
-    @ColumnDefault(value = "CURRENT_TIMESTAMP")
+    @ColumnDefault(value = "current_timestamp")
     private Date createdDate;
 
     /**

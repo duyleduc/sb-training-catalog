@@ -1,5 +1,6 @@
 package com.example.DemoSpringBoot.controllerz.publIc;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class CatalogPublicController {
     }
 
     @GetMapping(value = "/{id}")
-    public CatalogDTO getOneByID(@PathVariable String id) throws Exception {
+    public CatalogDTO getOneByID(@PathVariable BigInteger id) throws Exception {
         return cService.getCatalog(id);
     }
 }
