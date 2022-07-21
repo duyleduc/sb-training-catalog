@@ -1,8 +1,6 @@
 package com.example.DemoSpringBoot.services.serviceClasses;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -12,8 +10,6 @@ import org.springframework.stereotype.Service;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-
-import net.minidev.json.JSONObject;
 
 @Service
 public class OTPService {

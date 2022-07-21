@@ -45,7 +45,7 @@ public class Users {
     @PhoneNumberConstraint
     private String phone;
 
-    @Column
+    @Column(updatable = false)
     @CreationTimestamp
     @ColumnDefault(value = "current_timestamp")
     private Date createdDate;

@@ -1,5 +1,6 @@
 package com.example.DemoSpringBoot.controllerz.publIc;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,12 @@ public class ItemPublicController {
     private ItemServiceImpl iService;
 
     @GetMapping(value = "")
-    public List<ItemDTO> getAllItems(@PathVariable String CatalogId) throws Exception {
-        return iService.getAllItems(CatalogId);
+    public List<ItemDTO> getAllItems(@PathVariable BigInteger CatalogID) throws Exception {
+        return iService.getAllItems(CatalogID);
     }
 
-    @GetMapping(value = "/{id}")
-    public ItemDTO getItem(@PathVariable String id ) throws Exception {
-        return iService.getItem(id);
+    @GetMapping(value = "/{itemID}")
+    public ItemDTO getItem(@PathVariable BigInteger itemID ) throws Exception {
+        return iService.getItem(itemID);
     }
 }

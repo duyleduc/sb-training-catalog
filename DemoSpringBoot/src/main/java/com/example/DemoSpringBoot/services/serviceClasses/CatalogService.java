@@ -1,5 +1,6 @@
 package com.example.DemoSpringBoot.services.serviceClasses;
 
+import java.io.File;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
@@ -13,10 +14,14 @@ import com.example.DemoSpringBoot.mappers.CatalogMapper;
 import com.example.DemoSpringBoot.models.DTO.CatalogDTO;
 import com.example.DemoSpringBoot.repositories.CatalogRepository;
 import com.example.DemoSpringBoot.services.CatalogServiceImpl;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class CatalogService implements CatalogServiceImpl {
 
+    final ObjectMapper objectMapper = new ObjectMapper();
+    
     @Autowired
     CatalogMapper mapper;
 
@@ -62,9 +67,8 @@ public class CatalogService implements CatalogServiceImpl {
         if (repository.IsCataLog(editInfo.getCatalogID())) {
             BigInteger DatabaseID = repository.findByCatalogID(editInfo.getCatalogID()).get().getID();
             if (DatabaseID.intValue() == id.intValue()) {
-                throw new Exception("Already edit the Catalog with id: "+ id+".");
-            }
-            else {
+                throw new Exception("Already edit the Catalog with id: " + id + ".");
+            } else {
                 throw new Exception("This CatalogID is already exist. Plz choose different Name");
             }
 
@@ -88,6 +92,15 @@ public class CatalogService implements CatalogServiceImpl {
     @Override
     public CatalogDTO deleteCatalogDTO(BigInteger id) throws Exception {
         return null;
+    }
+
+    @Override
+    public List<CatalogDTO> seedCatalogs() throws Exception {
+        List<CatalogDTO> CatalogDTOsList = objectMapper.readValue(new File("DemoSpringBoot/src/main/java/com/example/DemoSpringBoot/templates/seeds/CatalogSeed.json"),
+                new TypeReference<List<CatalogDTO>>() {
+                });
+        repository.saveAll(mapper.DTOs2Catalogs(CatalogDTOsList));
+        return CatalogDTOsList;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.DemoSpringBoot.controllerz.privAte;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -32,6 +33,11 @@ public class CatalogController {
     @PutMapping(value = "/{id}")
     public CatalogDTO editUser(@Valid @RequestBody CatalogDTO catalogDTO, @PathVariable BigInteger id) throws Exception {
         return cService.editCatalog(id, catalogDTO);
+    }
+
+    @PostMapping(value = "/seeding")
+    public List<CatalogDTO> seedCatalog() throws Exception{
+        return cService.seedCatalogs();
     }
 
     

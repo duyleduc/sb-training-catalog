@@ -16,4 +16,6 @@ public interface CatalogServiceImpl {
 
 
     CatalogDTO deleteCatalogDTO(BigInteger id) throws Exception;
+
+    List<CatalogDTO> seedCatalogs() throws Exception;
 }

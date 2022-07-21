@@ -11,9 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-// import javax.validation.constraints.NotEmpty;
-// import javax.validation.constraints.NotNull;
-// import javax.validation.constraints.Size;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -25,10 +22,11 @@ public class Catalogs {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "catalogid")
+    @Column(name = "catalogID", columnDefinition = "BIGSERIAL NOT NULL")
     private BigInteger ID;
 
     @Column(length = 8, name = "catalog_id")
+    @NotNull
     private String catalogID;
 
     @OneToMany(mappedBy = "catal0g", cascade = { CascadeType.ALL })
@@ -41,14 +39,14 @@ public class Catalogs {
     @Column(length = 64)
     private String description;
 
-    @Column
+    @Column(updatable = false)
     @CreationTimestamp
-    @ColumnDefault(value = "current_timestamp")
+    @ColumnDefault(value = "CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column
     @UpdateTimestamp
-    @ColumnDefault(value = "current_timestamp")
+    @ColumnDefault(value = "CURRENT_TIMESTAMP")
     private Date updateDate;
 
     public String getCatalogID() {
