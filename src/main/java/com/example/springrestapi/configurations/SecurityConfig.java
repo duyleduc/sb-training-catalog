@@ -24,7 +24,7 @@ public class SecurityConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/protected/**")
-                .authenticated().antMatchers("api/v1/publish/*").anonymous()
+                .authenticated().antMatchers("api/v1/publish/*").permitAll()
                 .and()
                 .csrf().disable()
                 .httpBasic();

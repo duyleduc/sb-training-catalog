@@ -73,13 +73,13 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     @Transactional
     public CatalogResponse editCatalog(CatalogDto dto, Long id) throws Exception {
+        Catalog catalog = getCatalogById(id);
         Optional<Catalog> existedEditCatalog = catalogRepository.findByCatalogId(dto.getCatalogId());
-        if (!existedEditCatalog.isEmpty()) {
+
+        if (!existedEditCatalog.isEmpty() && catalog.getCatalogId() != existedEditCatalog.get().getCatalogId()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Catalog with id: " + dto.getCatalogId() + "  is traded");
         }
-
-        Catalog catalog = getCatalogById(id);
 
         catalog.setCatalogId(dto.getCatalogId());
         catalog.setCatalogName(dto.getCatalogName());

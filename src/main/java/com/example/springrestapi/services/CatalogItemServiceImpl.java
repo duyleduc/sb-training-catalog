@@ -66,15 +66,16 @@ public class CatalogItemServiceImpl implements CatalogItemService {
     }
 
     @Override
+    @Transactional
     public CatalogItemResponse editCatalogItem(EditCatalogItemDto dto, Long id, Long catalogId) throws Exception {
         catalogService.getCatalogById(catalogId);
+        CatalogItem catalogItem = getCatalogItemById(id);
         Optional<CatalogItem> existedItemToEdit = catalogItemRepository.findByItemId(dto.getItemId());
-        if (!existedItemToEdit.isEmpty()) {
+        if (!existedItemToEdit.isEmpty() && catalogItem.getItemId() != existedItemToEdit.get().getItemId()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Catalog item with id:  " + dto.getItemId() + " is traded");
         }
 
-        CatalogItem catalogItem = getCatalogItemById(id);
         if (!catalogItem.getCatalog().getId().equals(catalogId)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Catalog with id: " + catalogId + " does not have any item with id: " + id);
