@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.springrestapi.configurations.RequestConfig;
 import com.example.springrestapi.models.CatalogDto;
-import com.example.springrestapi.models.CatalogItemDto;
 import com.example.springrestapi.responseBodies.CatalogItemResponse;
 import com.example.springrestapi.responseBodies.CatalogResponse;
 import com.example.springrestapi.services.interfaces.CatalogService;

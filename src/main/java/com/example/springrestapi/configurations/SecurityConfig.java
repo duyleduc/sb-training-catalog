@@ -1,19 +1,17 @@
 package com.example.springrestapi.configurations;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import com.example.springrestapi.enums.Role;
+import com.example.springrestapi.requestFilters.JwtTokenValidationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,11 +21,17 @@ public class SecurityConfig {
     protected SecurityFilterChain configureFilterChain(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/protected/**")
-                .authenticated().antMatchers("api/v1/publish/*").permitAll()
+                .antMatchers(RequestConfig.BASE_PROTECTED_URL + "/catalogs/**").hasRole(Role.ADMIN.toString())
+                .antMatchers(RequestConfig.BASE_PROTECTED_URL + "/**")
+                .hasAnyRole(Role.ADMIN.toString(), Role.USER.toString())
+                .antMatchers(RequestConfig.BASE_PUBLIC_URL + "/*").permitAll()
                 .and()
-                .csrf().disable()
                 .httpBasic();
+
+        http.addFilterBefore(getTokenValidationFilter(),
+                BasicAuthenticationFilter.class);
+
+        http.csrf().disable();
 
         return http.build();
     }
@@ -38,13 +42,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    protected InMemoryUserDetailsManager configureAuthentication() throws Exception {
-        List<UserDetails> userDetailsList = new ArrayList<>();
-        userDetailsList.add(User.withUsername("employee").password(passwordEncoder().encode("password"))
-                .roles("EMPLOYEE", "USER").build());
-        userDetailsList.add(User.withUsername("manager").password(passwordEncoder().encode("password"))
-                .roles("MANAGER", "USER").build());
-
-        return new InMemoryUserDetailsManager(userDetailsList);
+    public JwtTokenValidationFilter getTokenValidationFilter() {
+        return new JwtTokenValidationFilter(RequestConfig.BASE_PROTECTED_URL);
     }
+
 }

@@ -1,6 +1,7 @@
 package com.example.springrestapi.requestBodies;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +14,9 @@ public class Auth {
     public static class AuthRequest {
         @Email
         private String email;
-        private String phone;
+
+        @Size(min = 8, max = 32)
+        private String password;
     }
 
 }

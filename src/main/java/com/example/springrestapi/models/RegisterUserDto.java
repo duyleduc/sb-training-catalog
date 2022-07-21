@@ -12,8 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
-
+public class RegisterUserDto {
     @NotBlank(message = "Last name is required")
     @Size(max = 64, message = "Last name max length is 64 character")
     private String lastName;
@@ -32,4 +31,6 @@ public class UserDto {
     @Size(max = 8, message = "First name max length is 8 character")
     private String firstName;
 
+    @Size(min = 8, max = 32)
+    private String password;
 }

@@ -88,6 +88,7 @@ public class CatalogItemServiceImpl implements CatalogItemService {
         catalogItem.setItemId(dto.getItemId());
         catalogItem.setItemName(dto.getItemName());
         catalogItem.setModifyDate(Instant.now());
+        catalogItemRepository.save(catalogItem);
 
         return catalogItemMapper.toCatalogItemResponse(catalogItem);
     }

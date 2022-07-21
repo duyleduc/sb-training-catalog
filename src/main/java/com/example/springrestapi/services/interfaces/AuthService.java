@@ -1,11 +1,12 @@
 package com.example.springrestapi.services.interfaces;
 
-import com.example.springrestapi.models.UserDto;
+import com.example.springrestapi.models.RegisterUserDto;
 import com.example.springrestapi.requestBodies.Auth.AuthRequest;
+import com.example.springrestapi.responseBodies.AuthResponse;
 
 public interface AuthService {
-    String login(AuthRequest request) throws Exception;
+    AuthResponse login(AuthRequest request) throws Exception;
 
-    UserDto registerUser(UserDto user) throws Exception;
+    AuthResponse registerUser(RegisterUserDto user) throws Exception;
 
 }

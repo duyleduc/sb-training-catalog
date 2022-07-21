@@ -1,16 +1,22 @@
 package com.example.springrestapi.entities;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,6 +39,8 @@ public class User {
     @Column(length = 64)
     private String email;
 
+    private String password;
+
     @Column(length = 10)
     private String phone;
 
@@ -41,6 +49,11 @@ public class User {
 
     @CreatedDate
     private Instant createDate;
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    private List<UserRole> roles;
 
     public User(String lastName, String email, String phone, String firstName) {
         this.lastName = lastName;

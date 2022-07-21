@@ -15,7 +15,6 @@ import com.example.springrestapi.entities.Catalog;
 import com.example.springrestapi.mappers.CatalogItemMapper;
 import com.example.springrestapi.mappers.CatalogMapper;
 import com.example.springrestapi.models.CatalogDto;
-import com.example.springrestapi.models.CatalogItemDto;
 import com.example.springrestapi.repositories.CatalogRepository;
 import com.example.springrestapi.responseBodies.CatalogItemResponse;
 import com.example.springrestapi.responseBodies.CatalogResponse;

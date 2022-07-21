@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.springrestapi.configurations.RequestConfig;
-import com.example.springrestapi.models.UserDto;
+import com.example.springrestapi.models.RegisterUserDto;
 import com.example.springrestapi.requestBodies.Auth.AuthRequest;
+import com.example.springrestapi.responseBodies.AuthResponse;
 import com.example.springrestapi.services.interfaces.AuthService;
 
 @RestController
@@ -23,15 +24,15 @@ public class AuthController {
     AuthService authService;
 
     @PostMapping(value = "/login")
-    public ResponseEntity<String> generateOTP(@Valid @RequestBody AuthRequest body) throws Exception {
-        String result = authService.login(body);
+    public ResponseEntity<AuthResponse> generateOTP(@Valid @RequestBody AuthRequest body) throws Exception {
+        AuthResponse result = authService.login(body);
 
-        return new ResponseEntity<String>(result, HttpStatus.OK);
+        return new ResponseEntity<AuthResponse>(result, HttpStatus.OK);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserDto body) throws Exception {
-        UserDto res = authService.registerUser(body);
-        return new ResponseEntity<UserDto>(res, HttpStatus.OK);
+    public ResponseEntity<AuthResponse> registerUser(@Valid @RequestBody RegisterUserDto body) throws Exception {
+        AuthResponse res = authService.registerUser(body);
+        return new ResponseEntity<AuthResponse>(res, HttpStatus.OK);
     }
 }
