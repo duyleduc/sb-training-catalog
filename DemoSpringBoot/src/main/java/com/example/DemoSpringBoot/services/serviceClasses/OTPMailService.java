@@ -1,7 +1,5 @@
 package com.example.DemoSpringBoot.services.serviceClasses;
 
-import java.time.Instant;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +10,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.support.RepositoryEntityLinks;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -20,7 +17,6 @@ import org.springframework.stereotype.Service;
 import com.example.DemoSpringBoot.entities.OTPs;
 import com.example.DemoSpringBoot.repositories.OTPRepository;
 import com.example.DemoSpringBoot.templates.EmailTemplate;
-import com.example.DemoSpringBoot.validationz.DateTimeValidation;
 
 @Service
 public class OTPMailService {
