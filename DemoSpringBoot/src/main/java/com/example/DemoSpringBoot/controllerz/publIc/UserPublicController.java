@@ -12,14 +12,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.DemoSpringBoot.models.DTO.UserDTO;
+import com.example.DemoSpringBoot.models.DTO.ValidateOTP;
 import com.example.DemoSpringBoot.services.UserServiceImpl;
+import com.example.DemoSpringBoot.services.serviceClasses.OTPService;
 import com.example.DemoSpringBoot.templates.OTPRequestBodyTemplate;
 
 @RestController
 @RequestMapping("api/v1/public/users")
 public class UserPublicController {
-  @Autowired
+    @Autowired
     private UserServiceImpl uService;
+
+    @Autowired
+    private OTPService otpService;
 
     @GetMapping(value = "")
     public List<UserDTO> getAllUsers() throws Exception {
@@ -31,8 +36,13 @@ public class UserPublicController {
         return uService.getOneUser(id);
     }
 
-    @PostMapping(value = "/OTP")
-    public void sendOTPUser(@RequestBody OTPRequestBodyTemplate OTP) throws Exception {
-        uService.sendOTPUser(OTP.getReceiver(),OTP.getFullname(), OTP.getSubject(), OTP.getMessage());
+    @PostMapping(value = "/OTP/verify/mail")
+    public void sendMailOTPUser(@RequestBody OTPRequestBodyTemplate OTP) throws Exception {
+        otpService.sendMailOTPUser(OTP.getReceiver(), OTP.getFullname(), OTP.getSubject());
+    }
+
+    @GetMapping(value = "/OTP/validate/mail")
+    public String validateMailOTPUser(@RequestBody ValidateOTP validateOTP ) throws Exception {
+        return otpService.validateMailOTPUser(validateOTP.getOTP(), validateOTP.getEmail());
     }
 }

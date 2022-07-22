@@ -1,18 +1,11 @@
 package com.example.DemoSpringBoot.services.serviceClasses;
 
 import java.math.BigInteger;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.example.DemoSpringBoot.entities.Users;
@@ -20,7 +13,6 @@ import com.example.DemoSpringBoot.mappers.UserMapper;
 import com.example.DemoSpringBoot.models.DTO.UserDTO;
 import com.example.DemoSpringBoot.repositories.UserRepository;
 import com.example.DemoSpringBoot.services.UserServiceImpl;
-import com.example.DemoSpringBoot.templates.EmailTemplate;
 
 @Service
 public class UserService implements UserServiceImpl {
@@ -31,11 +23,11 @@ public class UserService implements UserServiceImpl {
     @Autowired
     private UserRepository repository;
 
-    @Autowired
-    private JavaMailSender mailSender;
+    // @Autowired
+    // private JavaMailSender mailSender;
 
-    @Autowired
-    private OTPService otpService;
+    // @Autowired
+    // private OTPService otpService;
 
     @Value("${spring.mail.username}")
     private String sender;
@@ -89,31 +81,31 @@ public class UserService implements UserServiceImpl {
         }
     }
 
-    @Override
-    public void sendOTPUser(String receiver, String fullname, String subject, String message) throws Exception {
-        int otp = otpService.generateOTP(receiver).get(0);
-        int expiremins = otpService.generateOTP(receiver).get(1);
+    // @Override
+    // public void sendOTPUser(String receiver, String fullname, String subject, String message) throws Exception {
+    //     int otp = otpService.generateOTP(receiver).get(0);
+    //     int expiremins = otpService.generateOTP(receiver).get(1);
 
-        EmailTemplate template = new EmailTemplate("MailOTP.html");
+    //     EmailTemplate template = new EmailTemplate("MailOTP.html");
 
-        Map<String, String> replacements = new HashMap<String, String>();
+    //     Map<String, String> replacements = new HashMap<String, String>();
 
-        replacements.put("user", fullname);
-        replacements.put("OTP Number", String.valueOf(otp));
-        replacements.put("Exp", String.valueOf(expiremins));
+    //     replacements.put("user", fullname);
+    //     replacements.put("OTP Number", String.valueOf(otp));
+    //     replacements.put("Exp", String.valueOf(expiremins));
 
-        String fixedMessage = template.getTemplate(replacements);
+    //     String fixedMessage = template.getTemplate(replacements);
 
-       generateAndSendMessage(receiver, subject, fixedMessage);
-    }
+    //    generateAndSendMessage(receiver, subject, fixedMessage);
+    // }
 
-    private void generateAndSendMessage(String receiver, String subject, String message) throws MessagingException {
-        MimeMessage msg = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+    // private void generateAndSendMessage(String receiver, String subject, String message) throws MessagingException {
+    //     MimeMessage msg = mailSender.createMimeMessage();
+    //     MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 
-        helper.setTo(receiver);
-        helper.setSubject(subject);
-        helper.setText(message, true);
-        mailSender.send(msg);
-    }
+    //     helper.setTo(receiver);
+    //     helper.setSubject(subject);
+    //     helper.setText(message, true);
+    //     mailSender.send(msg);
+    // }
 }

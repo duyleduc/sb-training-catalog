@@ -14,6 +14,7 @@ import com.example.DemoSpringBoot.entities.Catalogs;
 public interface CatalogRepository extends JpaRepository<Catalogs, BigInteger> {
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Catalogs c WHERE c.catalogID = :catalogID")
     boolean IsCataLog(@Param("catalogID") String catalogID);
+
     Optional<Catalogs> findByCatalogID(String catalogID);
 
 }

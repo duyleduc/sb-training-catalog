@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class CatalogService implements CatalogServiceImpl {
 
-    final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
     
     @Autowired
     CatalogMapper mapper;
@@ -63,15 +63,17 @@ public class CatalogService implements CatalogServiceImpl {
 
     @Override
     public CatalogDTO editCatalog(BigInteger id, CatalogDTO editInfo) throws Exception {
-        // resend edit data to the same row.
+        // check Catalog exist with String CatalogID
         if (repository.IsCataLog(editInfo.getCatalogID())) {
-            BigInteger DatabaseID = repository.findByCatalogID(editInfo.getCatalogID()).get().getID();
+            Catalogs dBCatalogs = repository.findByCatalogID(editInfo.getCatalogID()).get();
+            BigInteger DatabaseID = dBCatalogs.getID();
+            // String DatabaseName =  dBCatalogs.getCatalogName();
+            // check Catalog String id & PK id
             if (DatabaseID.intValue() == id.intValue()) {
                 throw new Exception("Already edit the Catalog with id: " + id + ".");
             } else {
                 throw new Exception("This CatalogID is already exist. Plz choose different Name");
             }
-
         }
         try {
             Catalogs catalog = repository.findById(id).get();
@@ -100,7 +102,7 @@ public class CatalogService implements CatalogServiceImpl {
                 new TypeReference<List<CatalogDTO>>() {
                 });
         repository.saveAll(mapper.DTOs2Catalogs(CatalogDTOsList));
-        return CatalogDTOsList;
+        return getAllCatalogs();
     }
 
 }

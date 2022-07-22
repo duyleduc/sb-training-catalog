@@ -10,6 +10,12 @@ public class EmailTemplate {
 
     private InputStream stream;
 
+    /**
+     * REMINDER: IF IT CANNOT GET THE HTML FILE -> RUN MVN CLEAN INSTALL
+     * @param customtemplate
+     * @throws Exception
+     */
+
     public EmailTemplate(String customtemplate) throws Exception {
         try {
             this.template = setTemplate(customtemplate);
@@ -32,7 +38,7 @@ public class EmailTemplate {
     }
 
     public String getTemplate(Map<String, String> replacements) {
-
+        System.out.println(replacements);
         String cTemplate = this.template;
 
         for (Map.Entry<String, String> entry : replacements.entrySet()) {

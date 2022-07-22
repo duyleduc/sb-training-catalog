@@ -49,6 +49,9 @@ public class Catalogs {
     @ColumnDefault(value = "CURRENT_TIMESTAMP")
     private Date updateDate;
 
+    @Column(columnDefinition = "boolean default false")
+    private boolean isDeleted;
+    
     public String getCatalogID() {
         return catalogID;
     }
@@ -120,7 +123,7 @@ public class Catalogs {
     }
 
     public Catalogs(BigInteger ID, String catalogID, List<Items> itemsList, @NotNull String catalogName, String description,
-            Date createdDate, Date updateDate) {
+            Date createdDate, Date updateDate, boolean isDeleted) {
         this.ID = ID;
         this.catalogID = catalogID;
         this.itemsList = itemsList;
@@ -128,6 +131,15 @@ public class Catalogs {
         this.description = description;
         this.createdDate = (createdDate != null) ? new Date(createdDate.getTime()) : new Date();
         this.updateDate = (updateDate != null) ? new Date(updateDate.getTime()) : new Date();
+        this.isDeleted = isDeleted || false; 
+    }
+
+    public boolean getisDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted ;
     }
 
 }

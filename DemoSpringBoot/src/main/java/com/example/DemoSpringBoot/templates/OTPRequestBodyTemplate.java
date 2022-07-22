@@ -1,16 +1,15 @@
 package com.example.DemoSpringBoot.templates;
 
 public class OTPRequestBodyTemplate {
-    private String receiver, fullname, subject, message;
+    private String receiver, fullname, subject;
 
     public OTPRequestBodyTemplate() {
     }
 
-    public OTPRequestBodyTemplate(String receiver, String fullname, String subject, String message) {
+    public OTPRequestBodyTemplate(String receiver, String fullname, String subject) {
         this.receiver = receiver;
         this.fullname = fullname;
         this.subject = subject;
-        this.message = message;
     }
 
     public String getReceiver() {
@@ -35,14 +34,6 @@ public class OTPRequestBodyTemplate {
 
     public void setSubject(String subject) {
         this.subject = subject;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
 }

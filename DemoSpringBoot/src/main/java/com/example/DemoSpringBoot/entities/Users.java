@@ -22,7 +22,7 @@ import com.example.DemoSpringBoot.validationz.PhoneNumberConstraint;
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "bigserial primary key not null")
+    @Column(columnDefinition = "BIGSERIAL PRIMARY KEY NOT NULL")
     private BigInteger id;
 
     @Column
