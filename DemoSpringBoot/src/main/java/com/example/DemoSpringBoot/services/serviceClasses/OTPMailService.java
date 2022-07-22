@@ -1,5 +1,8 @@
 package com.example.DemoSpringBoot.services.serviceClasses;
 
+import java.time.Instant;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -9,6 +12,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.support.RepositoryEntityLinks;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -16,9 +20,10 @@ import org.springframework.stereotype.Service;
 import com.example.DemoSpringBoot.entities.OTPs;
 import com.example.DemoSpringBoot.repositories.OTPRepository;
 import com.example.DemoSpringBoot.templates.EmailTemplate;
+import com.example.DemoSpringBoot.validationz.DateTimeValidation;
 
 @Service
-public class OTPService {
+public class OTPMailService {
 
     @Autowired
     private JavaMailSender mailSender;
@@ -26,11 +31,14 @@ public class OTPService {
     @Autowired
     private OTPRepository repository;
 
+    // @Autowired
+    // private static DateTimeValidation DTValidation;
+
     private static final Integer EXPIRE_MINS = 4;
     private static final String SUCCESS = "Entered Otp is valid";
     private static final String FAIL = "Entered Otp is NOT valid. Please Retry!";
 
-    public OTPService() {
+    public OTPMailService() {
         super();
     }
 
@@ -52,20 +60,16 @@ public class OTPService {
         return OTP;
     }
 
-    public int getOtp(String key) {
+    public Optional<OTPs> getEmailOtp(String receiver) {
         try {
-            return 0;
-            // TODO:repos
-            // return otpCache.get(key);
+            return repository.findByEmail(receiver);
         } catch (Exception e) {
             System.out.println(e);
-            return 0;
+            throw e;
         }
     }
 
     public void sendMailOTPUser(String receiver, String fullname, String subject) throws Exception {
-        // int otp = generateOTP(receiver);
-        // int expiremins = generateOTP(receiver);
 
         OTPs OTP = generateMailOTP(receiver);
 
@@ -82,14 +86,23 @@ public class OTPService {
         generateAndSendMessage(receiver, subject, fixedMessage, OTP);
     }
 
+    private boolean isBeforeorNow(final Date date) {
+        System.out.println(new Date().getTime() +"  "+ date.getTime());
+        return new Date().getTime() <= date.getTime();
+    }
+
     public String validateMailOTPUser(int otpnum, String receiver) {
         if (otpnum >= 0) {
-            int serverOTP = getOtp(receiver);
-            if (serverOTP > 0) {
-                if (otpnum == serverOTP) {
-                    // check if expried ?
-
-                    return SUCCESS;
+            Optional<OTPs> serverOTP = getEmailOtp(receiver);
+            if (serverOTP.isPresent()) {
+                if (isBeforeorNow(serverOTP.get().getExpDate())) {
+                    if (otpnum == serverOTP.get().getOTP()) {
+                        System.out.println(";asldkfja;sldkf");
+                        return SUCCESS;
+                    }
+                }
+                else{
+                    return "OTP is expired";
                 }
             }
         }

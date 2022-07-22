@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.DemoSpringBoot.models.DTO.UserDTO;
 import com.example.DemoSpringBoot.models.DTO.ValidateOTP;
 import com.example.DemoSpringBoot.services.UserServiceImpl;
-import com.example.DemoSpringBoot.services.serviceClasses.OTPService;
+import com.example.DemoSpringBoot.services.serviceClasses.OTPMailService;
 import com.example.DemoSpringBoot.templates.OTPRequestBodyTemplate;
 
 @RestController
@@ -24,7 +24,7 @@ public class UserPublicController {
     private UserServiceImpl uService;
 
     @Autowired
-    private OTPService otpService;
+    private OTPMailService otpService;
 
     @GetMapping(value = "")
     public List<UserDTO> getAllUsers() throws Exception {

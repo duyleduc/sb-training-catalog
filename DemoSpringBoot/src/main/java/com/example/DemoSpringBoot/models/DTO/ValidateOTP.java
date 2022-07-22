@@ -23,9 +23,9 @@ public class ValidateOTP {
     public ValidateOTP() {
     }
 
-    public ValidateOTP(String email, int oTP) {
+    public ValidateOTP(String email, int otp) {
         this.email = email;
-        OTP = oTP;
+        OTP = otp;
     }
 
     
