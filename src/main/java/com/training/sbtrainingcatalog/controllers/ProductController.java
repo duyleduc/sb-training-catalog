@@ -2,6 +2,7 @@ package com.training.sbtrainingcatalog.controllers;
 
 import com.training.sbtrainingcatalog.entities.Catalog;
 import com.training.sbtrainingcatalog.entities.Product;
+import com.training.sbtrainingcatalog.exceptions.ResourceNotFoundException;
 import com.training.sbtrainingcatalog.models.ProductDto;
 import com.training.sbtrainingcatalog.services.CatalogService;
 import com.training.sbtrainingcatalog.services.ProductService;
@@ -43,9 +44,7 @@ public class ProductController {
         List<Long> catalogIds = catalogService.getCatalogIds();
 
         if(!catalogIds.contains(productDto.getCatalogId())){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "entity not found"
-            );
+            throw new ResourceNotFoundException("Catalog","id",productDto.getCatalogId());
         }
 
         Product product = modelMapper.map(productDto,Product.class);
@@ -65,9 +64,7 @@ public class ProductController {
         List<Long> catalogIds = catalogService.getCatalogIds();
 
         if(!catalogIds.contains(productDto.getCatalogId())){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "entity not found"
-            );
+            throw new ResourceNotFoundException("Catalog","id",productDto.getCatalogId());
         }
 
         Product product = modelMapper.map(productDto,Product.class);

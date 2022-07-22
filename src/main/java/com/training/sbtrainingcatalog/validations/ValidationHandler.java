@@ -1,4 +1,4 @@
-package com.training.sbtrainingcatalog.exceptions;
+package com.training.sbtrainingcatalog.validations;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
