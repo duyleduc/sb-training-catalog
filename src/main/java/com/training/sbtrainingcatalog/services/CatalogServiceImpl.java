@@ -8,16 +8,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class CatalogServiceImpl implements CatalogService {
 
     private final CatalogRepository catalogRepository;
@@ -41,6 +41,7 @@ public class CatalogServiceImpl implements CatalogService {
         return catalog;
     }
 
+    @Transactional
     @Override
     public Catalog saveCatalog(Catalog catalog) {
 
@@ -52,6 +53,7 @@ public class CatalogServiceImpl implements CatalogService {
         return catalogRepository.save(catalog);
     }
 
+    @Transactional
     @Override
     public Catalog updateCatalog(Catalog catalog,Long id) {
         Catalog catalogDB = catalogRepository.findCatalogById(id);
@@ -72,6 +74,7 @@ public class CatalogServiceImpl implements CatalogService {
         return catalogUpdate;
     }
 
+    @Transactional
     @Override
     public Long removeCatalog(Long id) {
         Catalog catalog = catalogRepository.findCatalogById(id);

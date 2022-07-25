@@ -25,9 +25,9 @@ public class Product {
     @Column(name="description")
     private String description;
 
-//    @Column(name="catalog_id")
-//    @NotNull
-//    private String catalogID;
+    @Column(name = "quantity")
+    private Long quantity;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "catalog_id")

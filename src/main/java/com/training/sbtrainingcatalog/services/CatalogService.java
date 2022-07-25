@@ -11,6 +11,7 @@ public interface CatalogService {
     List<Long> getCatalogIds();
 
     Catalog getCatalog(Long id);
+
     Catalog saveCatalog(Catalog catalog);
     Catalog updateCatalog(Catalog catalog,Long id);
     Long removeCatalog(Long id);
