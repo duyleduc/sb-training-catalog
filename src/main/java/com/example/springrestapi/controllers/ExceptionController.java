@@ -63,6 +63,6 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(HttpServerErrorException.class)
     protected ResponseEntity<Object> handleHttpClientErrorException(HttpServerErrorException ex) {
-        return new ResponseEntity<Object>(ex.getResponseBodyAsString(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<Object>("Invalid token", HttpStatus.BAD_REQUEST);
     }
 }

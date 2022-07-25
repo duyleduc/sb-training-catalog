@@ -36,9 +36,6 @@ public class RequestConfig implements WebMvcConfigurer {
     @Bean
     public RestTemplate getRestTemplate() {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getInterceptors().add((request, body, clientHttpRequestExecution) -> {
-            return clientHttpRequestExecution.execute(request, body);
-        });
         return restTemplate;
     }
 

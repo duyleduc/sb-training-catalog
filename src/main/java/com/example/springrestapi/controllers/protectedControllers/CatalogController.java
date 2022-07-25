@@ -36,7 +36,7 @@ public class CatalogController {
     @GetMapping
     public ResponseEntity<List<CatalogResponse>> getCatalogs(HttpServletRequest request) throws Exception {
 
-        restTemplateUtil.authVerify(request, RequestConfig.AUTH_URL + "/verify");
+        restTemplateUtil.authVerify(request, RequestConfig.AUTH_URL + "/verify/admin");
         List<CatalogResponse> response = catalogService.getCatalogs();
         return new ResponseEntity<List<CatalogResponse>>(response, HttpStatus.OK);
     }
@@ -44,7 +44,7 @@ public class CatalogController {
     @PostMapping
     public ResponseEntity<CatalogResponse> createNewCatalog(@Valid @RequestBody CatalogDto body,
             HttpServletRequest request) throws Exception {
-        restTemplateUtil.authVerify(request, RequestConfig.AUTH_URL + "/verify");
+        restTemplateUtil.authVerify(request, RequestConfig.AUTH_URL + "/verify/admin");
         CatalogResponse response = catalogService.createCatalog(body);
         return new ResponseEntity<CatalogResponse>(response, HttpStatus.OK);
     }
@@ -52,7 +52,7 @@ public class CatalogController {
     @GetMapping(value = "{id}/items")
     public ResponseEntity<List<CatalogItemResponse>> getItems(@PathVariable(value = "id") Long id,
             HttpServletRequest request) throws Exception {
-        restTemplateUtil.authVerify(request, RequestConfig.AUTH_URL + "/verify");
+        restTemplateUtil.authVerify(request, RequestConfig.AUTH_URL + "/verify/admin");
         List<CatalogItemResponse> response = catalogService.getCatalogItems(id);
         return new ResponseEntity<List<CatalogItemResponse>>(response, HttpStatus.OK);
     }
@@ -61,7 +61,7 @@ public class CatalogController {
     public ResponseEntity<CatalogResponse> editCatalog(@PathVariable Long id, @RequestBody CatalogDto dto,
             HttpServletRequest request)
             throws Exception {
-        restTemplateUtil.authVerify(request, RequestConfig.AUTH_URL + "/verify");
+        restTemplateUtil.authVerify(request, RequestConfig.AUTH_URL + "/verify/admin");
         CatalogResponse response = catalogService.editCatalog(dto, id);
         return new ResponseEntity<CatalogResponse>(response, HttpStatus.OK);
 
