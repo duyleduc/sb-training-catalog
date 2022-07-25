@@ -19,7 +19,6 @@ import com.example.springrestapi.models.CatalogDto;
 import com.example.springrestapi.responseBodies.CatalogItemResponse;
 import com.example.springrestapi.responseBodies.CatalogResponse;
 import com.example.springrestapi.services.interfaces.CatalogService;
-import com.example.springrestapi.utils.RestTemplateUtil;
 
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -30,38 +29,31 @@ public class CatalogController {
     @Autowired
     private CatalogService catalogService;
 
-    @Autowired
-    private RestTemplateUtil restTemplateUtil;
-
     @GetMapping
-    public ResponseEntity<List<CatalogResponse>> getCatalogs(HttpServletRequest request) throws Exception {
+    public ResponseEntity<List<CatalogResponse>> getCatalogs() throws Exception {
 
-        restTemplateUtil.authVerify(request, RequestConfig.AUTH_URL + "/verify/admin");
         List<CatalogResponse> response = catalogService.getCatalogs();
         return new ResponseEntity<List<CatalogResponse>>(response, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<CatalogResponse> createNewCatalog(@Valid @RequestBody CatalogDto body,
-            HttpServletRequest request) throws Exception {
-        restTemplateUtil.authVerify(request, RequestConfig.AUTH_URL + "/verify/admin");
+    public ResponseEntity<CatalogResponse> createNewCatalog(@Valid @RequestBody CatalogDto body) throws Exception {
+
         CatalogResponse response = catalogService.createCatalog(body);
         return new ResponseEntity<CatalogResponse>(response, HttpStatus.OK);
     }
 
     @GetMapping(value = "{id}/items")
-    public ResponseEntity<List<CatalogItemResponse>> getItems(@PathVariable(value = "id") Long id,
-            HttpServletRequest request) throws Exception {
-        restTemplateUtil.authVerify(request, RequestConfig.AUTH_URL + "/verify/admin");
+    public ResponseEntity<List<CatalogItemResponse>> getItems(@PathVariable(value = "id") Long id) throws Exception {
+
         List<CatalogItemResponse> response = catalogService.getCatalogItems(id);
         return new ResponseEntity<List<CatalogItemResponse>>(response, HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CatalogResponse> editCatalog(@PathVariable Long id, @RequestBody CatalogDto dto,
-            HttpServletRequest request)
+    public ResponseEntity<CatalogResponse> editCatalog(@PathVariable Long id, @RequestBody CatalogDto dto)
             throws Exception {
-        restTemplateUtil.authVerify(request, RequestConfig.AUTH_URL + "/verify/admin");
+
         CatalogResponse response = catalogService.editCatalog(dto, id);
         return new ResponseEntity<CatalogResponse>(response, HttpStatus.OK);
 
