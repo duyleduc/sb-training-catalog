@@ -1,4 +1,4 @@
-package com.example.springrestapi.delegateService.interfaces;
+package com.example.springrestapi.services.interfaces;
 
 import com.example.springrestapi.messages.QueueMessage;
 

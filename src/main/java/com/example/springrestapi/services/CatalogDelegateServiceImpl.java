@@ -1,16 +1,16 @@
-package com.example.springrestapi.delegateService;
+package com.example.springrestapi.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.springrestapi.delegateService.interfaces.DelegateService;
 import com.example.springrestapi.messages.QueueMessage;
 import com.example.springrestapi.messages.data.CatalogItemQuantityMessage;
 import com.example.springrestapi.services.interfaces.CatalogItemService;
+import com.example.springrestapi.services.interfaces.DelegateService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service("catalogDelegateService")
-public class CatalogDelegateService implements DelegateService {
+public class CatalogDelegateServiceImpl implements DelegateService {
 
     @Autowired
     private CatalogItemService catalogItemService;

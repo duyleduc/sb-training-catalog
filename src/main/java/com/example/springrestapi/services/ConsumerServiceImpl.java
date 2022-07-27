@@ -1,33 +1,32 @@
-package com.example.springrestapi.consumers;
+package com.example.springrestapi.services;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.example.springrestapi.configurations.RabbitMQConfig;
-import com.example.springrestapi.delegateService.interfaces.DelegateService;
 import com.example.springrestapi.messages.QueueMessage;
+import com.example.springrestapi.services.interfaces.ConsumerService;
+import com.example.springrestapi.services.interfaces.DelegateService;
 
-@Component
-public class Consumer {
+@Service
+public class ConsumerServiceImpl implements ConsumerService {
 
     @Autowired
     @Qualifier("catalogDelegateService")
-    private DelegateService catalogDelegate;
+    private DelegateService catalogDelegateService;
 
     @RabbitListener(queues = RabbitMQConfig.QUEUE_NAME)
+    @Override
     public void listen(QueueMessage message) {
 
         try {
             String routingKey = message.getRoutingKey();
             String[] splitStrings = routingKey.split("\\.");
-            for (String string : splitStrings) {
-                System.out.println(string);
-            }
             switch (splitStrings[1]) {
                 case "catalog":
-                    catalogDelegate.receiveAction(splitStrings[0], splitStrings[2], message);
+                    catalogDelegateService.receiveAction(splitStrings[0], splitStrings[2], message);
                     break;
             }
 
@@ -36,4 +35,5 @@ public class Consumer {
         }
 
     }
+
 }

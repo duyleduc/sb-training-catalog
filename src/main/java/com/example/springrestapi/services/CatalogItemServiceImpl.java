@@ -9,21 +9,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
-import com.example.springrestapi.configurations.RabbitMQConfig;
 import com.example.springrestapi.entities.Catalog;
 import com.example.springrestapi.entities.CatalogItem;
 import com.example.springrestapi.mappers.CatalogItemMapper;
-import com.example.springrestapi.messages.MessageBuilder;
-import com.example.springrestapi.messages.QueueMessage;
 import com.example.springrestapi.models.CatalogItemDto;
 import com.example.springrestapi.models.EditCatalogItemDto;
-import com.example.springrestapi.publishers.Publisher;
 import com.example.springrestapi.repositories.CatalogItemRepository;
 import com.example.springrestapi.repositories.CatalogRepository;
 import com.example.springrestapi.responseBodies.CatalogItemResponse;
 import com.example.springrestapi.services.interfaces.CatalogItemService;
 import com.example.springrestapi.services.interfaces.CatalogService;
+import com.example.springrestapi.services.interfaces.PublisherService;
 
 @Service
 public class CatalogItemServiceImpl implements CatalogItemService {
@@ -41,7 +37,7 @@ public class CatalogItemServiceImpl implements CatalogItemService {
     private CatalogService catalogService;
 
     @Autowired
-    private Publisher publisher;
+    private PublisherService publisherService;
 
     @Override
     @Transactional
@@ -108,24 +104,19 @@ public class CatalogItemServiceImpl implements CatalogItemService {
         Optional<CatalogItem> find = catalogItemRepository.findByItemId(itemId);
         if (find.isEmpty()) {
             String routingKey = "error.order.reduceQuantityItemNotFound";
-            QueueMessage message = MessageBuilder.buildMessage(itemId, RabbitMQConfig.QUEUE_NAME, routingKey,
-                    RabbitMQConfig.TOPIC_EXCHANGE, messageId);
-            publisher.sendMessage(message, routingKey);
+
+            publisherService.sendMessage(itemId, routingKey, messageId);
         }
         CatalogItem catalogItem = find.get();
         int newQuantity = catalogItem.getQuantity() - quantity;
         if (newQuantity < 0) {
             String routingKey = "error.order.itemNotHaveEnoughQuantity";
-            QueueMessage message = MessageBuilder.buildMessage(itemId, RabbitMQConfig.QUEUE_NAME, routingKey,
-                    RabbitMQConfig.TOPIC_EXCHANGE, messageId);
-            publisher.sendMessage(message, routingKey);
+            publisherService.sendMessage(itemId, routingKey, messageId);
         }
         catalogItem.setQuantity(newQuantity);
         catalogItemRepository.save(catalogItem);
         String routingKey = "reduceQuantity.order.success";
-        QueueMessage message = MessageBuilder.buildMessage(itemId, RabbitMQConfig.QUEUE_NAME, routingKey,
-                RabbitMQConfig.TOPIC_EXCHANGE, messageId);
-        publisher.sendMessage(message, routingKey);
+        publisherService.sendMessage(itemId, routingKey, messageId);
         return catalogItem;
     }
 
