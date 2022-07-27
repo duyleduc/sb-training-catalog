@@ -1,4 +1,4 @@
-package dinhgt.springboot.sbtrainingcatalogs.exception.catalog;
+package dinhgt.springboot.sbtrainingcatalogs.exception.item;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +9,10 @@ import dinhgt.springboot.sbtrainingcatalogs.errors.ErrorResponse;
 
 
 @RestControllerAdvice
-public class CatalogCreateExceptionHandler {
+public class ItemExceptionHandler {
 
 	@ExceptionHandler
-	public ResponseEntity<ErrorResponse> handlerException(CatalogUpdateException error) {
+	public ResponseEntity<ErrorResponse> handlerException(ItemUpdateException error) {
 		ErrorResponse errorResponse = new ErrorResponse();
 
 		errorResponse.setHttpCode(HttpStatus.BAD_REQUEST.value());

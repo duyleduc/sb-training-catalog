@@ -1,20 +1,34 @@
 package dinhgt.springboot.sbtrainingcatalogs.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "catalog", schema = "my_schema")
-public class Catalog {
+public class Catalog implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name ="catalog_id")
+	@Column(name = "aid")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+
+	@Column(name = "catalog_id")
 	private String catalogId;
 
 	@Column(name = "catalog_name")
@@ -25,24 +39,59 @@ public class Catalog {
 
 	@Column(name = "created_date")
 	private LocalDateTime createdDate;
-	
-	
-	
-	@OneToMany(mappedBy = "catalog")
+
+	@Column(name = "modify_date")
+	private LocalDateTime modifyDate;
+
+	@Column(name = "is_actived")
+	private boolean isActivated;
+
+	@OneToMany(mappedBy = "catalog", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Item> items;
 
 	public Catalog() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Catalog(String catalogId, String catalogName, String description, LocalDateTime createdDate,
-			List<Item> items) {
+	public Catalog(int id, String catalogId, String catalogName, String description, LocalDateTime createdDate,
+			LocalDateTime modifyDate, boolean isActivated, List<Item> items) {
 		super();
+		this.id = id;
 		this.catalogId = catalogId;
 		this.catalogName = catalogName;
 		this.description = description;
 		this.createdDate = createdDate;
+		this.modifyDate = modifyDate;
+		this.isActivated = isActivated;
 		this.items = items;
+	}
+
+	/**
+	 * @return the updatedDate
+	 */
+	public LocalDateTime getModifyDate() {
+		return modifyDate;
+	}
+
+	/**
+	 * @param updatedDate the updatedDate to set
+	 */
+	public void setModifyDate(LocalDateTime modifyDate) {
+		this.modifyDate = modifyDate;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	/**
@@ -115,5 +164,18 @@ public class Catalog {
 		this.items = items;
 	}
 
-	
+	/**
+	 * @return the isActivated
+	 */
+	public boolean isActivated() {
+		return isActivated;
+	}
+
+	/**
+	 * @param isActivated the isActivated to set
+	 */
+	public void setActivated(boolean isActivated) {
+		this.isActivated = isActivated;
+	}
+
 }

@@ -1,8 +1,17 @@
 package dinhgt.springboot.sbtrainingcatalogs.dtos;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class ItemDTO {
+public class ItemDTO implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private int id;
+
 	private String itemID;
 
 	private String itemName;
@@ -13,19 +22,78 @@ public class ItemDTO {
 
 	private LocalDateTime createdDate;
 
+	private LocalDateTime updatedDate;
+
+	private boolean isActivated;
+ 
+	private int quantity;
+	
 	public ItemDTO() {
 		// TODO Auto-generated constructor stub
 	}
+
 	
-	public ItemDTO(String itemID, String itemName, String description,CatalogDTO catalog,
-			LocalDateTime createdDate) {
+
+	public ItemDTO(int id, String itemID, String itemName, String description, CatalogDTO catalog,
+			LocalDateTime createdDate, LocalDateTime updatedDate, boolean isActivated, int quantity) {
 		super();
+		this.id = id;
 		this.itemID = itemID;
 		this.itemName = itemName;
 		this.description = description;
-
 		this.catalog = catalog;
 		this.createdDate = createdDate;
+		this.updatedDate = updatedDate;
+		this.isActivated = isActivated;
+		this.quantity = quantity;
+	}
+
+
+
+	/**
+	 * @return the quantity
+	 */
+	public int getQuantity() {
+		return quantity;
+	}
+
+
+
+	/**
+	 * @param quantity the quantity to set
+	 */
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+
+
+	/**
+	 * @return the updatedDate
+	 */
+	public LocalDateTime getUpdatedDate() {
+		return updatedDate;
+	}
+
+	/**
+	 * @param updatedDate the updatedDate to set
+	 */
+	public void setUpdatedDate(LocalDateTime updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
 	}
 
 	/**
@@ -98,8 +166,18 @@ public class ItemDTO {
 		this.createdDate = createdDate;
 	}
 
-	
-	
-	
-	
+	/**
+	 * @return the isActivated
+	 */
+	public boolean isActivated() {
+		return isActivated;
+	}
+
+	/**
+	 * @param isActivated the isActivated to set
+	 */
+	public void setActivated(boolean isActivated) {
+		this.isActivated = isActivated;
+	}
+
 }

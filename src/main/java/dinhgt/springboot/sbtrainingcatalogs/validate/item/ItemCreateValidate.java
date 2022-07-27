@@ -1,12 +1,21 @@
 package dinhgt.springboot.sbtrainingcatalogs.validate.item;
 
 import dinhgt.springboot.sbtrainingcatalogs.dtos.ItemDTO;
-import dinhgt.springboot.sbtrainingcatalogs.exception.item.ItemCreateException;
+import dinhgt.springboot.sbtrainingcatalogs.exception.item.ItemUpdateException;
 
 public class ItemCreateValidate {
 	
 	public static void validate(ItemDTO item) {
-		if(item.getItemID().isEmpty()) throw new ItemCreateException("Item id cannot be empty!");
-		if(item.getItemName().isEmpty()) throw new ItemCreateException("Item name cannot be empty!");
+		try {
+			if(item.getItemID().isEmpty()) throw new ItemUpdateException("Item id cannot be empty!");
+		} catch (NullPointerException e) {
+			throw new ItemUpdateException("Item id cannot be empty!");
+		}
+	
+		try {
+			if(item.getItemName().isEmpty()) throw new ItemUpdateException("Item name cannot be empty!");
+		} catch (NullPointerException e) {
+			throw new ItemUpdateException("Item name cannot be empty!");
+		}
 	}
 }

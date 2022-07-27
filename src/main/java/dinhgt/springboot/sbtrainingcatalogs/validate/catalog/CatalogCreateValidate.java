@@ -10,5 +10,9 @@ public class CatalogCreateValidate {
 		if(catalog.getCatalogName().isEmpty()) {
 			throw new CatalogCreateException("Catalog Name cannot be empty!");
 		}
+		if(catalog.getCatalogId().isEmpty()) {
+			throw new CatalogCreateException("Catalog ID cannot be empty!");
+		}
+		
 	}
 }
