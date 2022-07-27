@@ -16,7 +16,7 @@ public class CatalogDelegateService implements DelegateService {
     private CatalogItemService catalogItemService;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @Override
     public void receiveAction(String actionType, String domain, QueueMessage message) throws Exception {

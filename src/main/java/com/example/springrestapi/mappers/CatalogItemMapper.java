@@ -12,7 +12,7 @@ import com.example.springrestapi.responseBodies.CatalogItemResponse;
 public class CatalogItemMapper {
 
     @Autowired
-    CatalogMapper catalogMapper;
+    private CatalogMapper catalogMapper;
 
     public CatalogItem toCatalogItem(CatalogItemDto dto, Catalog catalog) {
         return new CatalogItem(dto.getItemId(), dto.getItemName(), dto.getDescription(), catalog, dto.getQuantity());

@@ -29,13 +29,13 @@ import com.example.springrestapi.services.interfaces.CatalogService;
 public class CatalogItemServiceImpl implements CatalogItemService {
 
     @Autowired
-    CatalogItemRepository catalogItemRepository;
+    private CatalogItemRepository catalogItemRepository;
 
     @Autowired
-    CatalogRepository catalogRepository;
+    private CatalogRepository catalogRepository;
 
     @Autowired
-    CatalogItemMapper catalogItemMapper;
+    private CatalogItemMapper catalogItemMapper;
 
     @Autowired
     private CatalogService catalogService;

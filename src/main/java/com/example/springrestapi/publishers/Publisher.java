@@ -11,7 +11,7 @@ import com.example.springrestapi.messages.QueueMessage;
 public class Publisher {
 
     @Autowired
-    RabbitTemplate rabbitTemplate;
+    private RabbitTemplate rabbitTemplate;
 
     public void sendMessage(QueueMessage message, String routingKey) {
         rabbitTemplate.convertAndSend(RabbitMQConfig.TOPIC_EXCHANGE, routingKey, message);
